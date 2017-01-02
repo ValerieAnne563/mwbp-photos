@@ -1,0 +1,12 @@
+{
+  "name": "mwbp",
+  "version": "1.0.0",
+  "description": "Photo Browser for MWBP",
+  "scripts": {
+    "start": "node ./server/start.js"
+  },
+  "dependencies": {
+    "express": "^4.14.0",
+    "log4js": "^1.1.0"
+  }
+}
