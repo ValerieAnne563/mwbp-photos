@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Photo Browser for MWBP",
   "scripts": {
-    "start": "node ./server/start.js"
+    "start": "node ./server/server.js"
   },
   "dependencies": {
     "express": "^4.14.0",
