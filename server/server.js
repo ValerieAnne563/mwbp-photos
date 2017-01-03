@@ -51,3 +51,8 @@ app.get('/', function(req, res){
 				  gmaps_api_key: process.env.GMAPS_API_KEY}
 	res.render('map.ejs');
 });
+
+//404 must be after all url handlers
+app.use(function (req, res, next) {
+  res.status(404).send("Not all who wander are lost, but there's nothing to find here.")
+})
