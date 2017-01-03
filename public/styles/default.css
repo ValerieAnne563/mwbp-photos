@@ -1,0 +1,20 @@
+body{
+	background-color: aliceblue;
+}
+
+.accent {
+	background-color: lightgrey;
+}
+
+.vpad-50{
+	padding-top: 50px;
+	padding-bottom: 50px;
+}
+
+.map-boundary{
+	height: 300px;
+}
+
+#map {
+	height: 100%;
+}
