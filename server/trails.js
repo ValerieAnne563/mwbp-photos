@@ -33,10 +33,25 @@ load_file = function(filename, callback){
   })
 }
 
+//String utils
+function endsWith(str, suffix) {
+    return str.indexOf(suffix, str.length - suffix.length) !== -1;
+}
+
 exports.load_all = function(callback){
-    file = path.join(__dirname, "/resources/maroon_bells_trails/2016-08-17-0832.geojson")
+  mb_dir = path.join(__dirname, "/resources/maroon_bells_trails/")
+
+  fs.readdir(mb_dir, function(error, files){
+
+    json_files = _.filter(files, function(fname){
+      return endsWith(fname, ".geojson")
+    })
+    logger.debug("Found " + json_files.length + " trail files")
+
+    file = path.join(mb_dir, json_files[0])
     load_file(file, function(response){
-    callback(response)
+      callback(response)
+    })
   });
 
 }
