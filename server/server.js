@@ -10,12 +10,6 @@ app.get('index');
 var port = process.env.PORT || 8081;
 app.listen(port);
 
-app.get('/trails', function(req, res){
-  trails.load_all(function(trail_locations){
-    res.end(JSON.stringify(trail_locations))
-  })
-});
-
 app.get('/', function(req, res){
 	var locations = [
         {lat: -31.563910, lng: 147.154312},
