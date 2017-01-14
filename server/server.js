@@ -46,9 +46,11 @@ app.get('/', function(req, res){
       trails.load_all(function(trail_lines){
           all_trails = trail_lines
 
-          res.locals = {name: 'Fancy Pants',
+          res.locals = {name: 'Fancy Pants',                        
                         trail_locations: JSON.stringify(all_trails),
                         locations: JSON.stringify(locations),
+                        initial_center: JSON.stringify({lat: 39.089864, lng: -107.059379}),
+                        initial_zoom: 11,
                         gmaps_api_key: process.env.GMAPS_API_KEY
                       }
           res.render('map.ejs');

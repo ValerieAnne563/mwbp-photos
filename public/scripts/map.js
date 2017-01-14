@@ -1,15 +1,18 @@
 //Adapted from: <!-- https://developers.google.com/maps/documentation/javascript/marker-clustering -->      
 
-      //callers of this function must define locations
-      // and trails 
+      //callers of this function must define 
+      // * locations
+      // * trails 
+      // * init_center
+      // * init_zoom
       //TODO: make these null safe
       //caller must have an element called map
 
       function initMap(){    
 
         var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 3,
-          center: {lat: -28.024, lng: 140.887}
+          zoom: initial_zoom,
+          center: initial_center
         });
 
         // Create an array of alphabetical characters used to label the markers.

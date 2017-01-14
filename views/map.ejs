@@ -26,6 +26,8 @@
     //TODO safety check
     var trails = JSON.parse('<%- trail_locations%>');
     var locations = JSON.parse('<%- locations%>');
+    var initial_center = JSON.parse('<%- initial_center %>')
+    var initial_zoom = JSON.parse('<%- initial_zoom %>')
     </script>
     <!-- TODO: With ES6, js can now import js -->
     <script src="https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/markerclusterer.js">
