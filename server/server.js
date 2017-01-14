@@ -1,4 +1,5 @@
 var express = require('express')
+var trails = require('./trails.js')
 
 app = express();
 app.use(express.static('public'))
@@ -8,6 +9,12 @@ app.get('index');
 // process.env.PORT as set by Heroku
 var port = process.env.PORT || 8081;
 app.listen(port);
+
+app.get('/trails', function(req, res){
+  trails.load_all(function(trail_locations){
+    res.end(JSON.stringify(trail_locations))
+  })
+});
 
 app.get('/', function(req, res){
 	var locations = [
@@ -36,20 +43,17 @@ app.get('/', function(req, res){
         {lat: -43.999792, lng: 170.463352}
       ]
 
-       var flight_path = [
-          {lat: 37.772, lng: -122.214},
-          {lat: 21.291, lng: -157.821},
-          {lat: -18.142, lng: 178.431},
-          {lat: -27.467, lng: 153.027}
-        ];
+      trails.load_all(function(trail_lines){
+          all_trails = trail_lines
 
-        trails = [flight_path];  
+          res.locals = {name: 'Fancy Pants',
+                        trail_locations: JSON.stringify(all_trails),
+                        locations: JSON.stringify(locations),
+                        gmaps_api_key: process.env.GMAPS_API_KEY
+                      }
+          res.render('map.ejs');
+      });
 
-	res.locals = {name: 'Fancy Pants',
-				  trail_locations: JSON.stringify([flight_path]),
-				  locations: JSON.stringify(locations),
-				  gmaps_api_key: process.env.GMAPS_API_KEY}
-	res.render('map.ejs');
 });
 
 //404 must be after all url handlers
