@@ -1,6 +1,7 @@
 var path = require('path')
 var fs = require('fs')
 var _ = require('underscore')
+var async = require('async')
 
 const logger = require('log4js').getLogger();
 
@@ -19,7 +20,8 @@ extract_feature = function(feature){
 load_file = function(filename, callback){
   fs.readFile(filename, function when_read(error, data){
     if (error != null){
-      logger.error("Unable to load file from " + filename + "due to error.")
+      logger.error("Unable to load file from " + filename + " due to error:")
+      logger.error(error)
       callback("[]")
     }
     else{
@@ -39,19 +41,36 @@ function endsWith(str, suffix) {
 }
 
 exports.load_all = function(callback){
+  console.log("loading")
   mb_dir = path.join(__dirname, "/resources/maroon_bells_trails/")
 
   fs.readdir(mb_dir, function(error, files){
 
-    json_files = _.filter(files, function(fname){
-      return endsWith(fname, ".geojson")
-    })
+    json_files = _.chain(files)
+                  .filter(function(fname){
+                    return endsWith(fname, ".geojson")
+                  })
+                  .map(function(x){return path.join(mb_dir, x)})
+                  .value()
     logger.debug("Found " + json_files.length + " trail files")
 
-    file = path.join(mb_dir, json_files[0])
-    load_file(file, function(response){
-      callback(response)
-    })
+
+    aggregate_files = function(error, lists){
+      console.log("Supplying map with " + lists.length + " trails")
+      callback(_.flatten(lists, true))
+    }
+
+    //second argument to async.map must send two values to its callback (err, value)
+    //since load_file only sends one, this adapter wraps the call and sends it back
+    // with the compatible
+    adapter = function(filename, callback){
+      load_file(filename, function(response){
+        callback(error, response)
+      })
+    }
+    async.map(json_files, adapter, aggregate_files)
+
+
   });
 
 }
