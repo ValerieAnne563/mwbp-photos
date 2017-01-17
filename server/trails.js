@@ -41,7 +41,6 @@ function endsWith(str, suffix) {
 }
 
 exports.load_all = function(callback){
-  console.log("loading")
   mb_dir = path.join(__dirname, "/resources/maroon_bells_trails/")
 
   fs.readdir(mb_dir, function(error, files){
