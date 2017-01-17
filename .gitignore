@@ -2,3 +2,4 @@ deploy
 npm-debug.log
 node_modules/
 env_vars.sh
+*.gpx
